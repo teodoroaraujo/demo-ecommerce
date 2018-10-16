@@ -1,8 +1,7 @@
 package com.demo.ecommerce.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,9 +18,9 @@ public class CategoriaController {
 	private CategoriaService categoriaService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Categoria findById(@PathVariable Long id) {
-		Optional<Categoria> cat = categoriaService.findById(id);
-		return cat.get();
+	public ResponseEntity<?> findById(@PathVariable Long id) {
+		Categoria cat = categoriaService.findById(id);
+		return ResponseEntity.ok().body(cat);
 	}
 
 }
