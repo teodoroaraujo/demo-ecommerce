@@ -36,6 +36,8 @@ public class Produto implements Serializable {
 		this.nome = nome;
 		this.preco = preco;
 	}
+	
+	public Produto() {}
 
 
 
