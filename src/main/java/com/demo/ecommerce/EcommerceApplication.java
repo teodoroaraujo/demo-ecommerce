@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.demo.ecommerce.entity.Categoria;
 import com.demo.ecommerce.entity.Cidade;
+import com.demo.ecommerce.entity.Cliente;
+import com.demo.ecommerce.entity.Endereco;
 import com.demo.ecommerce.entity.Estado;
 import com.demo.ecommerce.entity.Produto;
+import com.demo.ecommerce.enums.TipoCliente;
 import com.demo.ecommerce.repository.CategoriaRepository;
 import com.demo.ecommerce.repository.CidadeRepository;
+import com.demo.ecommerce.repository.ClienteRepository;
+import com.demo.ecommerce.repository.EnderecoRepository;
 import com.demo.ecommerce.repository.EstadoRepository;
 import com.demo.ecommerce.repository.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class EcommerceApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceApplication.class, args);
@@ -66,5 +77,18 @@ public class EcommerceApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "11111111111", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("32350000", "32350001"));
+		
+		Endereco end1 = new Endereco(null, "Rua Flores", "100", "APTO 200", "Jardins", "38400000", cli1, c1);
+		Endereco end2 = new Endereco(null, "Avenida Matos", "100", "APTO 200", "Flores", "38400000", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2)); 
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		
+		
 	}
 }
